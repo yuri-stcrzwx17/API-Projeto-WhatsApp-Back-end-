@@ -1,8 +1,13 @@
-// funcoes.js
+/***********************************************************************************************************************************************************************************************************************************
+ * Objetivo: Arquivo responsável pelas funções para criar a API da atividade do WhatsApp
+ * Data: 24/09/2025
+ * Autor: Yuri Silva de Oliveira
+ * Versão: 1.0
+ **********************************************************************************************************************************************************************************************************************************/
 
 const dados = require('./contatos.js');
 
-// Helper function to find a user by ID
+//função Detetive (ela vai encontar os dados pelo id)
 function encontrarUsuarioPorId(id) {
     // Converte o ID para número e procura no array de usuários
     return dados["whats-users"].find(user => user.id === parseInt(id));
@@ -19,6 +24,7 @@ function listarPerfil(id) {
     if (!usuario) {
         return null;
     }
+
     // Retorna apenas os dados relevantes do perfil
     return {
         account: usuario.account,
@@ -36,6 +42,7 @@ function listarContatos(id) {
     if (!usuario) {
         return [];
     }
+
     // Retorna apenas os dados de contato(sem msgs)
     return usuario.contacts.map(contato => {
         return {
@@ -53,12 +60,23 @@ function listarMensagens(id) {
     if (!usuario) {
         return [];
     }
-    // Agrupa todas as mensagens de todos os contatos do usuário
-    let todasAsMensagens = [];
-    usuario.contacts.forEach(contato => {
-        todasAsMensagens = todasAsMensagens.concat(contato.messages);
+
+    //função que vai retornar as msg junto com as informações dos contatos
+    const todasAsMensagensComContato = usuario.contacts.flatMap(contato => {
+        return contato.messages.map(mensagem => {
+            return {
+                ...mensagem,
+                contact_info: {
+                    name: contato.name,
+                    number: contato.number,
+                    image: contato.image,
+                    description: contato.description
+                }
+            };
+        });
     });
-    return todasAsMensagens;
+
+    return todasAsMensagensComContato;
 }
 
 // 5. Listar uma conversa de um usuário e um contato (via Query)

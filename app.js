@@ -1,4 +1,14 @@
-// app.js
+/***********************************************************************************************************************************************************************************************************************************
+ * Objetivo: API responsavel em criar endpoints referentes a atividade 
+ * Data:24/09/2025
+ * Autor: Yuri Silva de Oliveira
+ * Versão: 1.0
+ * 
+ * dependencias para criar a API: 
+ *    express     - npm install express       --save instala  as dependencias para criar a API
+ *    cors        - npm install cors          --save instala  as dependencias para configuarar as permissoes de uma API
+ *    body-parser - npm install body-parser   --save instala  as dependencias para receber os tipos de dados via POST ou PUT
+ ************************************************************************************************************************************************************************************************************************************/
 
 const express = require('express');
 const app = express();
